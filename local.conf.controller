@@ -43,6 +43,10 @@ MURANO_APPS=io.murano.apps.apache.Tomcat,io.murano.apps.Guacamole
 
 # Magnum
 enable_plugin magnum https://github.com/openstack/magnum stable/mitaka
+enable_plugin magnum-ui https://github.com/openstack/magnum-ui stable/mitaka
+
+# Senlin
+enable_plugin senlin https://git.openstack.org/openstack/senlin stable/mitaka
 
 # Multi Node Setup
 # MULTI_HOST=1
