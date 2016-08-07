@@ -14,7 +14,7 @@ SYSLOG=True
 
 # Neutron Setup
 disable_service n-net
-ENABLED_SERVICES+=,q-agt,q-l3,q-svc,q-dhcp,q-meta,neutron,q-lbaas
+ENABLED_SERVICES+=,q-agt,q-l3,q-svc,q-dhcp,q-meta,neutron
 
 OVS_PHYSICAL_BRIDGE=br-ex
 PUBLIC_INTERFACE=<ETH0>
@@ -24,7 +24,7 @@ PUBLIC_BRIDGE=br-ex
 OVS_BRIDGE_MAPPINGS=public:br-ex
 
 # Network Setup
-PUBLIC_NETWORK_GATEWAY=<GATEWAY_IP_ADDR>
+PUBLIC_NETWORK_GATEWAY=<GATEWAY_IP_ADDRESS>
 FLOATING_RANGE=<GATEWAY_IP_RANGE>
 
 # Heat
@@ -41,25 +41,27 @@ enable_plugin murano git://git.openstack.org/openstack/murano stable/mitaka
 enable_service murano-cfapi
 MURANO_APPS=io.murano.apps.apache.Tomcat,io.murano.apps.Guacamole
 
+# Swift
+enable_service s-proxy s-object s-container s-account
+SWIFT_HASH=096d08da4f8d4cce3a724c5f6c18f055
+SWIFT_LOOPBACK_DISK_SIZE=20G
+
+# Cinder Setting
+VOLUME_BACKING_FILE_SIZE=20G
+
+# Barbican
+enable_plugin barbican https://git.openstack.org/openstack/barbican stable/mitaka
+
+# Neutron LBaaS
+enable_plugin neutron-lbaas https://git.openstack.org/openstack/neutron-lbaas stable/mitaka
+ENABLED_SERVICES+=,q-lbaas
+
 # Magnum
 enable_plugin magnum https://github.com/openstack/magnum stable/mitaka
 enable_plugin magnum-ui https://github.com/openstack/magnum-ui stable/mitaka
 
 # Senlin
 enable_plugin senlin https://git.openstack.org/openstack/senlin stable/mitaka
-
-# Nova-Docker
-enable_plugin nova-docker https://git.openstack.org/openstack/nova-docker stable/mitaka
-GITDIR['nova-docker']=/opt/stack/nova-docker
-
-# Swift
-SWIFT_HASH=096d08da4f8d4cce3a724c5f6c18f055
-SWIFT_LOOPBACK_DISK_SIZE=20G
-
-VOLUME_BACKING_FILE_SIZE=20G
-
-enable_plugin barbican https://git.openstack.org/openstack/barbican
-enable_plugin neutron-lbaas https://git.openstack.org/openstack/neutron-lbaas
 
 # Multi Node Setup
 # MULTI_HOST=1
